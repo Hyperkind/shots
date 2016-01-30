@@ -30,6 +30,7 @@
 
   Shots.Game.prototype.create = function () {
 
+    this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.match_state = MATCH.IN_PROGRESS;
     this.background = this.game.add.tileSprite(0,0,Shots.ASSETS.IMAGE.BG.width,Shots.ASSETS.IMAGE.BG.height, Shots.ASSETS.IMAGE.BG.name);
     this.background.autoScroll(-40, 0);
@@ -106,6 +107,9 @@
       }
 
     });
+
+    this.game.physics.arcade.collide(this.player_1, this.coffee);
+    this.game.physics.arcade.collide(this.player_1, this.vodka);
 
   };
 
