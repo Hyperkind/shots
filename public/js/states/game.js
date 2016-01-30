@@ -6,6 +6,8 @@
     // Player 1
     // where we want player to start on screen
     {x: 100, y: 450},
+    // coffee initial position
+    {x: 800, y: 150}
   ];
 
   var MATCH = {
@@ -40,6 +42,9 @@
     this.player_1.x = INITIAL_POSITIONS[0].x;
     this.player_1.y = INITIAL_POSITIONS[0].y;
 
+    this.coffee.x = INITIAL_POSITIONS[1].x;
+    this.coffee.y = INITIAL_POSITIONS[1].y;
+
     // initialize input handler
     this.input = new Shots.GameInput(this);
 
@@ -73,6 +78,7 @@
         coffee.body.acceleration.y = 0;
       }else{
       coffee.body.acceleration.y = GRAVITY;
+      coffee.body.velocity.x = -40;
       }
 
     });
