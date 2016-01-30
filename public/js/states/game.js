@@ -1,5 +1,7 @@
 (function () {
 
+  var GRAVITY = 1945;
+
   var INITIAL_POSITIONS = [
     // Player 1
     // where we want player to start on screen
@@ -38,7 +40,25 @@
 
   };
 
-  Shots.Game.FLOOR_Y = 400;
+  Shots.Game.FLOOR_Y = 450;
+
+  Shots.Game.prototype.update = function () {
+
+    // determine which direction each player is facing
+
+
+    [this.player_1].forEach(function(player){
+      // touching land or falling
+      if(player.body.y > Shots.Game.FLOOR_Y){
+        player.body.y = Shots.Game.FLOOR_Y;
+        player.body.velocity.y = 0;
+        player.body.acceleration.y = 0;
+      }else{
+        player.body.acceleration.y = GRAVITY;
+      }
+
+    });
+  };
 
     // Input actions
   Shots.Game.prototype.continue = function () {
