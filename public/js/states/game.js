@@ -12,11 +12,20 @@
     {x: 600, y: 150}
   ];
 
+  var MESSAGE_STYLE = {
+    font: "65px Arial",
+    fill: "#ff0044",
+    align: "center"
+  };
+
   var MATCH = {
     PRE : "PRE",
     IN_PROGRESS : "IN_PROGRESS",
     RESOLVED : "RESOLVED"
   };
+
+  var DEFAULT_FLASH_TIME = 3000; // ms
+
 
   Shots.Game = function () {
 
@@ -117,9 +126,25 @@
   function collectCoffee () {
     this.player_1.coffeeCounter++;
     console.log(this.player_1.coffeeCounter);
+    this.coffee_notice();
     return this.coffee.kill();
   }
 
+  Shots.Game.prototype.flash = function(message, cb){
+
+    var text = this.game.add.text(0, 0, message, MESSAGE_STYLE);
+    text.x = this.game.world.centerX - text.width/2;
+
+    // setTimeout(function(){
+    //   text.destroy();
+    //   if(cb) cb();
+    // }, DEFAULT_FLASH_TIME);
+  };
+
+  Shots.Game.prototype.coffee_notice = function(){
+    this.flash('Coffee Collect: ' + this.player_1.coffeeCounter);
+
+  };
 
     // Input actions
   Shots.Game.prototype.continue = function () {
