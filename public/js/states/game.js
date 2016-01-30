@@ -32,7 +32,7 @@
 
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.match_state = MATCH.IN_PROGRESS;
-    this.background = this.game.add.tileSprite(0,0,Shots.ASSETS.IMAGE.BG.width,Shots.ASSETS.IMAGE.BG.height, Shots.ASSETS.IMAGE.BG.name);
+    this.background = this.game.add.tileSprite(0,0,Shots.ASSETS.IMAGE.BG_MORNING.width,Shots.ASSETS.IMAGE.BG_MORNING.height, Shots.ASSETS.IMAGE.BG_MORNING.name);
     this.background.autoScroll(-40, 0);
 
     this.player_1 = new Shots.Player(this.game, 0);
@@ -61,7 +61,7 @@
 
   };
 
-  Shots.Game.FLOOR_Y = 450;
+  Shots.Game.FLOOR_Y = 480;
 
   Shots.Game.prototype.update = function () {
 
