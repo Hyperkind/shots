@@ -7,7 +7,9 @@
     // where we want player to start on screen
     {x: 100, y: 450},
     // coffee initial position
-    {x: 800, y: 150}
+    {x: 800, y: 150},
+    // vodka initial position
+    {x: 600, y: 150}
   ];
 
   var MATCH = {
@@ -20,6 +22,7 @@
 
     this.player_1;
     this.coffee;
+    this.vodka;
     this.input; // direction that player faces
     this.match_state; // ???
 
@@ -38,12 +41,19 @@
     this.coffee = new Shots.Coffee(this.game, 0);
     this.game.add.existing(this.coffee);
 
-    //position players
+    // loads vodka
+    this.vodka = new Shots.Vodka(this.game, 0);
+    this.game.add.existing(this.vodka);
+
+    //position players & items
     this.player_1.x = INITIAL_POSITIONS[0].x;
     this.player_1.y = INITIAL_POSITIONS[0].y;
 
     this.coffee.x = INITIAL_POSITIONS[1].x;
     this.coffee.y = INITIAL_POSITIONS[1].y;
+
+    this.vodka.x = INITIAL_POSITIONS[2].x;
+    this.vodka.y = INITIAL_POSITIONS[2].y;
 
     // initialize input handler
     this.input = new Shots.GameInput(this);
@@ -79,6 +89,20 @@
       }else{
       coffee.body.acceleration.y = GRAVITY;
       coffee.body.velocity.x = -40;
+      }
+
+    });
+
+    // gives vodka to vodka
+    [this.vodka].forEach(function(vodka){
+      // drops vodka to ground
+      if(vodka.body.y > Shots.Game.FLOOR_Y){
+        vodka.body.y = Shots.Game.FLOOR_Y;
+        vodka.body.velocity.y = 0;
+        vodka.body.acceleration.y = 0;
+      }else{
+      vodka.body.acceleration.y = GRAVITY;
+      vodka.body.velocity.x = -40;
       }
 
     });

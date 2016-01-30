@@ -12,6 +12,13 @@ Shots.ASSETS = {
       path : 'assets/graphics/coffee.png',
       width : 100,
       height : 100
+    },
+
+    VODKA : {
+      name : 'vodka',
+      path : 'assets/graphics/pixel_vodka.png',
+      width : 100,
+      height : 100
     }
   },
 
