@@ -23,7 +23,8 @@
   Shots.Game.prototype.create = function () {
 
     this.match_state = MATCH.IN_PROGRESS;
-    this.game.add.tileSprite(0,0,Shots.ASSETS.IMAGE.BG.width,Shots.ASSETS.IMAGE.BG.height, Shots.ASSETS.IMAGE.BG.name);
+    this.background = this.game.add.tileSprite(0,0,Shots.ASSETS.IMAGE.BG.width,Shots.ASSETS.IMAGE.BG.height, Shots.ASSETS.IMAGE.BG.name);
+    this.background.autoScroll(-40, 0);
 
     this.player_1 = new Shots.Player(this.game, 0);
     this.game.add.existing(this.player_1);
