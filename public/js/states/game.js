@@ -63,6 +63,12 @@
       }
 
     });
+
+    // gives gravity to coffee
+    [this.coffee].forEach(function(coffee){
+      coffee.body.acceleration.y = GRAVITY;
+    });
+
   };
 
     // Input actions
