@@ -33,10 +33,17 @@
     this.player_1.y = INITIAL_POSITIONS[0].y;
 
     // initialize input handler
-    // this.input = new Shots.GameInput(this);
+    this.input = new Shots.GameInput(this);
 
   };
 
   Shots.Game.FLOOR_Y = 400;
+
+    // Input actions
+  Shots.Game.prototype.continue = function () {
+    if(this.match_state === MATCH.RESOLVED){
+      this.state.start(Shots.STATES.BOOT);
+    }
+  };
 
 })();
