@@ -108,10 +108,17 @@
 
     });
 
-    this.game.physics.arcade.collide(this.player_1, this.coffee);
+    this.game.physics.arcade.overlap(this.player_1, this.coffee, null, collectCoffee, this);
     this.game.physics.arcade.collide(this.player_1, this.vodka);
 
   };
+
+
+  function collectCoffee () {
+    return this.coffee.kill();
+
+  }
+
 
     // Input actions
   Shots.Game.prototype.continue = function () {
