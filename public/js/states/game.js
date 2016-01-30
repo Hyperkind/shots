@@ -115,8 +115,9 @@
 
 
   function collectCoffee () {
+    this.player_1.coffeeCounter++;
+    console.log(this.player_1.coffeeCounter);
     return this.coffee.kill();
-
   }
 
 

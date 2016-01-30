@@ -12,6 +12,7 @@
     this.game = game;
     this.id = id;
     this.name = name? name : 'Player ' +(id+1);
+    this.coffeeCounter = 0;
     // this.facing;
 
     Phaser.Sprite.call(this, game, 0, 0, Shots.ASSETS.SPRITESHEET.PLAYER.name);
