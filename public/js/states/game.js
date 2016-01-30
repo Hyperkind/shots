@@ -3,7 +3,7 @@
   var INITIAL_POSITIONS = [
     // Player 1
     // where we want player to start on screen
-    {x: 100, y: 100},
+    {x: 100, y: 450},
   ];
 
   var MATCH = {
@@ -33,7 +33,7 @@
     this.player_1.y = INITIAL_POSITIONS[0].y;
 
     // initialize input handler
-    this.input = new Shots.GameInput(this);
+    // this.input = new Shots.GameInput(this);
 
   };
 
