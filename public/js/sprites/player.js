@@ -8,11 +8,12 @@
   //   RIGHT : 1
   // };
 
-  Shots.Player = function (game, id, name) {
+  Shots.Player = function (game, id, name, fx) {
     this.game = game;
     this.id = id;
     this.name = name? name : 'Player ' +(id+1);
     this.coffeeCounter = 0;
+    this.fx = fx;
     // this.facing;
 
     Phaser.Sprite.call(this, game, 0, 0, Shots.ASSETS.SPRITESHEET.PLAYER.name);
@@ -69,6 +70,8 @@
     if( this.body.y === Shots.Game.FLOOR_Y ){
       this.body.velocity.y = -JUMP_HEIGHT;
     }
+
+    this.fx.play();
     // else if( this.is_diving ){ // allow jump after dive (in mid air)
     //   this.body.velocity.y = -JUMP_HEIGHT*(this.body.y/Shots.Game.FLOOR_Y);
     // }

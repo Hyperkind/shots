@@ -40,13 +40,19 @@
   };
 
   Shots.Game.prototype.create = function () {
+    var music = this.game.add.audio(Shots.ASSETS.AUDIO.NORMAL_WALK.name);
+    music.play();
+    music.loopFull(0.6);
+
+    var fx = this.game.add.audio(Shots.ASSETS.AUDIO.JUMP.name);
+    fx.allowMultiple = true;
 
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.match_state = MATCH.IN_PROGRESS;
     this.background = this.game.add.tileSprite(0,0,Shots.ASSETS.IMAGE.BG_MORNING.width,Shots.ASSETS.IMAGE.BG_MORNING.height, Shots.ASSETS.IMAGE.BG_MORNING.name);
     this.background.autoScroll(SCROLL_SPEED, 0);
 
-    this.player_1 = new Shots.Player(this.game, 0);
+    this.player_1 = new Shots.Player(this.game, 0, 'teo', fx);
     this.game.add.existing(this.player_1);
 
     // loads coffee

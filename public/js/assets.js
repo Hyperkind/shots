@@ -29,5 +29,15 @@ Shots.ASSETS = {
       width : 900,
       height : 600
     }
+  },
+  AUDIO : {
+    NORMAL_WALK : {
+      name: 'normal-walk',
+      path: 'assets/audio/normal-walk.mp3'
+    },
+    JUMP : {
+      name : 'jump',
+      path : 'assets/audio/jump.mp3'
+    }
   }
 };
