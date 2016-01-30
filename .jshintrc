@@ -1,0 +1,10 @@
+{
+  "globals": {
+    "window": true,
+    "Shots": true,
+    "Phaser": true
+  },
+
+  "undef": true,
+  "unused": true
+}
