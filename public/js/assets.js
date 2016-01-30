@@ -9,9 +9,9 @@ Shots.ASSETS = {
     },
     COFFEE : {
       name : 'coffee',
-      path : 'assets/graphics/coffee.png',
-      width : 100,
-      height : 100
+      path : 'assets/graphics/Coffee-1.png',
+      width : 50,
+      height : 50
     },
 
     VODKA : {
@@ -23,9 +23,9 @@ Shots.ASSETS = {
   },
 
   IMAGE : {
-    BG : {
+    BG_MORNING : {
       name : 'bg',
-      path : 'assets/graphics/pixel_city.png',
+      path : 'assets/graphics/shots-morning-background.png',
       width : 900,
       height : 600
     }
