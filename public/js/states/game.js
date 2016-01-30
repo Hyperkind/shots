@@ -17,6 +17,7 @@
   Shots.Game = function () {
 
     this.player_1;
+    this.coffee;
     this.input; // direction that player faces
     this.match_state; // ???
 
@@ -30,6 +31,10 @@
 
     this.player_1 = new Shots.Player(this.game, 0);
     this.game.add.existing(this.player_1);
+
+    // loads coffee
+    this.coffee = new Shots.Coffee(this.game, 0);
+    this.game.add.existing(this.coffee);
 
     //position players
     this.player_1.x = INITIAL_POSITIONS[0].x;
