@@ -26,6 +26,8 @@
 
   var DEFAULT_FLASH_TIME = 3000; // ms
 
+  var SCROLL_SPEED = -40;
+
 
   Shots.Game = function () {
 
@@ -42,7 +44,7 @@
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.match_state = MATCH.IN_PROGRESS;
     this.background = this.game.add.tileSprite(0,0,Shots.ASSETS.IMAGE.BG_MORNING.width,Shots.ASSETS.IMAGE.BG_MORNING.height, Shots.ASSETS.IMAGE.BG_MORNING.name);
-    this.background.autoScroll(-40, 0);
+    this.background.autoScroll(SCROLL_SPEED, 0);
 
     this.player_1 = new Shots.Player(this.game, 0);
     this.game.add.existing(this.player_1);
@@ -98,7 +100,7 @@
         coffee.body.acceleration.y = 0;
       }else{
       coffee.body.acceleration.y = GRAVITY;
-      coffee.body.velocity.x = -40;
+      coffee.body.velocity.x = SCROLL_SPEED;
       }
 
     });
@@ -127,6 +129,8 @@
     this.player_1.coffeeCounter++;
     console.log(this.player_1.coffeeCounter);
     this.coffee_notice();
+    SCROLL_SPEED -= 40;
+    this.background.autoScroll(SCROLL_SPEED, 0);
     return this.coffee.kill();
   }
 
