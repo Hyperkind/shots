@@ -66,7 +66,15 @@
 
     // gives gravity to coffee
     [this.coffee].forEach(function(coffee){
+      // drops coffee to ground
+      if(coffee.body.y > Shots.Game.FLOOR_Y){
+        coffee.body.y = Shots.Game.FLOOR_Y;
+        coffee.body.velocity.y = 0;
+        coffee.body.acceleration.y = 0;
+      }else{
       coffee.body.acceleration.y = GRAVITY;
+      }
+
     });
 
   };
