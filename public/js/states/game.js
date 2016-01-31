@@ -12,7 +12,9 @@
     // ninja initial position
     {x: 850, y: 225},
     // zoidberg initial position
-    {x: 850, y: 400}
+    {x: 850, y: 400},
+    // car initial position
+    {x: 850, y: 450}
   ];
 
   var MATCH = {
@@ -38,6 +40,7 @@
     this.vodka = [];
     this.ninja = [];
     this.zoidberg = [];
+    this.car = [];
     this.timer = 0;
     this.input; // direction that player faces
     this.match_state;
@@ -78,8 +81,13 @@
     this.ninja.push(new Shots.Ninja(this.game, 0));
     this.game.add.existing(this.ninja[0]);
 
+    // loads zoidberg
     this.zoidberg.push(new Shots.Zoidberg(this.game, 0));
     this.game.add.existing(this.zoidberg[0]);
+
+    // loads car
+    this.car.push(new Shots.Car(this.game, 0));
+    this.game.add.existing(this.car[0]);
 
     //position players & items
     this.player_1.x = INITIAL_POSITIONS[0].x;
@@ -96,6 +104,9 @@
 
     this.zoidberg[0].x = INITIAL_POSITIONS[4].x;
     this.zoidberg[0].y = INITIAL_POSITIONS[4].y;
+
+    this.car[0].x = INITIAL_POSITIONS[5].x;
+    this.car[0].y = INITIAL_POSITIONS[5].y;
 
     // initialize input handler
     this.input = new Shots.GameInput(this);
@@ -130,7 +141,7 @@
     }
 
     // new ninja creator
-    if(this.timer % Math.floor(Math.random() * 300 + 5) === 0) {
+    if(this.timer % Math.floor(Math.random() * 2500) === 0) {
       var newNinja = new Shots.Ninja(this.game, 0);
       //randomize where ninja starts, i.e. higher or lower
       newNinja.y = INITIAL_POSITIONS[3].y;
@@ -147,6 +158,15 @@
       newZoidberg.y = INITIAL_POSITIONS[4].y;
       this.game.add.existing(newZoidberg);
       this.zoidberg.push(newZoidberg);
+    }
+
+    // new car creator
+    if(this.timer % Math.floor(Math.random() * 2500) === 0){
+      var newCar = new Shots.Car(this.game, 0);
+      newCar.x = INITIAL_POSITIONS[5].x;
+      newCar.y = INITIAL_POSITIONS[5].y;
+      this.game.add.existing(newCar);
+      this.car.push(newCar);
     }
 
     // Refactor player/item physics
@@ -171,6 +191,7 @@
       objectPhysics(vodka, SCROLL_SPEED, GRAVITY);
     });
 
+    // zoidberg
     this.zoidberg.forEach(function(zoidberg) {
       objectPhysics(zoidberg, SCROLL_SPEED);
     });
@@ -178,6 +199,11 @@
     // ninja
     this.ninja.forEach(function(ninja) {
       objectPhysics(ninja, SCROLL_SPEED);
+    });
+
+    // car
+    this.car.forEach(function(car) {
+      objectPhysics(car, SCROLL_SPEED);
     });
 
     // gives gravity to coffee
@@ -209,6 +235,10 @@
 
     this.zoidberg.forEach(function(zoidberg) {
       self.game.physics.arcade.collide(self.player_1, zoidberg, null, touchZoidberg, this);
+    });
+
+    this.car.forEach(function(car) {
+      self.game.physics.arcade.collide(self.player_1, car, null, touchCar.bind(self, car), this);
     });
 
     var timeRemaining = ((60000 - this.timer*15)/1000);
@@ -257,6 +287,13 @@
 
   function touchZoidberg () {
     // this.player_1.body.bounce.setTo(0.5, 0.5);
+  }
+
+  function touchCar (car) {
+    SCROLL_SPEED = -40;
+    this.background.autoScroll(SCROLL_SPEED, 0);
+    console.log(SCROLL_SPEED);
+    return car.kill();
   }
 
     // Input actions
