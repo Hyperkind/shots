@@ -16,16 +16,30 @@ Shots.ASSETS = {
       height : 50
     },
 
-    VODKA : {
-      name : 'vodka',
-      path : 'assets/graphics/pixel_vodka.png',
+    WHISKEY : {
+      name : 'whiskey',
+      path : 'assets/graphics/whiskey.png',
+      width : 100,
+      height : 100
+    },
+
+    NINJA : {
+      name : 'ninja',
+      path : 'assets/graphics/lil-ninja.png',
+      width : 100,
+      height : 100
+    },
+
+    CAR : {
+      name : 'car',
+      path : 'assets/graphics/skyline.png',
       width : 100,
       height : 100
     },
 
     ZOIDBERG : {
       name : 'zoidberg',
-      path : 'assets/graphics/zoidberg_258x435.png',
+      path : 'assets/graphics/zoidberg-small.png',
       width : 258,
       height : 435
     }
