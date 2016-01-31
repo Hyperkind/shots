@@ -21,6 +21,13 @@ Shots.ASSETS = {
       path : 'assets/graphics/pixel_vodka.png',
       width : 100,
       height : 100
+    },
+
+    ZOIDBERG : {
+      name : 'zoidberg',
+      path : 'assets/graphics/zoidberg_258x435.png',
+      width : 258,
+      height : 435
     }
   },
 
