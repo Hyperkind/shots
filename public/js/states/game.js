@@ -8,7 +8,9 @@
     // coffee initial position
     {x: 800, y: 150},
     // vodka initial position
-    {x: 850, y: 150}
+    {x: 850, y: 150},
+    // zoidberg initial position
+    {x: 850, y: 400}
   ];
 
   var MATCH = {
@@ -32,6 +34,7 @@
     this.player_1;
     this.coffee = [];
     this.vodka = [];
+    this.zoidberg = [];
     this.timer = 0;
     this.input; // direction that player faces
     this.match_state; // ???
@@ -62,13 +65,14 @@
 
     // loads coffee
     this.coffee.push(new Shots.Coffee(this.game, 0));
-    // this.coffee = new Shots.Coffee(this.game, 0);
     this.game.add.existing(this.coffee[0]);
-    // this.game.add.existing(this.coffee);
 
     // loads vodka
     this.vodka.push(new Shots.Vodka(this.game, 0));
     this.game.add.existing(this.vodka[0]);
+
+    this.zoidberg.push(new Shots.Zoidberg(this.game, 0));
+    this.game.add.existing(this.zoidberg[0]);
 
     //position players & items
     this.player_1.x = INITIAL_POSITIONS[0].x;
@@ -80,6 +84,9 @@
 
     this.vodka[0].x = INITIAL_POSITIONS[2].x;
     this.vodka[0].y = INITIAL_POSITIONS[2].y;
+
+    this.zoidberg[0].x = INITIAL_POSITIONS[3].x;
+    this.zoidberg[0].y = INITIAL_POSITIONS[3].y;
 
     // initialize input handler
     this.input = new Shots.GameInput(this);
@@ -102,6 +109,7 @@
       this.coffee.push(newCoffee);
     }
 
+    // vodka creator
     if(this.timer % Math.floor(Math.random() * 5000 + 5) === 0){
       var newVodka = new Shots.Vodka(this.game, 0);
       //randomize where it falls, maybe to right of player.x
@@ -112,24 +120,37 @@
       this.vodka.push(newVodka);
     }
 
+    // Zoidberg creator
+    if(this.timer % Math.floor(Math.random() * 2500) === 0){
+      var newZoidberg = new Shots.Zoidberg(this.game, 0);
+      newZoidberg.x = INITIAL_POSITIONS[3].x;
+      newZoidberg.y = INITIAL_POSITIONS[3].y;
+      this.game.add.existing(newZoidberg);
+      this.zoidberg.push(newZoidberg);
+    }
+
     // Refactor player/item physics
-    function objectPhysics (obj, scrollSpeed) {
+    function objectPhysics (obj, scrollSpeed, gravity) {
       if (obj.body.y > Shots.Game.FLOOR_Y){
         obj.body.y = Shots.Game.FLOOR_Y;
         obj.body.velocity.y = 0;
         obj.body.acceleration.y = 0;
       }else{
-        obj.body.acceleration.y = GRAVITY;
+        obj.body.acceleration.y = gravity;
         obj.body.velocity.x = scrollSpeed;
       }
     }
 
     this.coffee.forEach(function(coffee){
-      objectPhysics(coffee, SCROLL_SPEED);
+      objectPhysics(coffee, SCROLL_SPEED, GRAVITY);
     });
 
     this.vodka.forEach(function(vodka) {
-      objectPhysics(vodka, SCROLL_SPEED);
+      objectPhysics(vodka, SCROLL_SPEED, GRAVITY);
+    });
+
+    this.zoidberg.forEach(function(zoidberg) {
+      objectPhysics(zoidberg, SCROLL_SPEED);
     });
 
 
@@ -141,7 +162,7 @@
         player.body.velocity.y = 0;
         player.body.acceleration.y = 0;
       }else{
-      player.body.acceleration.y = GRAVITY;
+        player.body.acceleration.y = GRAVITY;
       }
 
     });
@@ -153,6 +174,10 @@
 
     this.vodka.forEach(function(vodka) {
       self.game.physics.arcade.overlap(self.player_1, vodka, null, collectVodka.bind(self, vodka), this);
+    });
+
+    this.zoidberg.forEach(function(zoidberg) {
+      self.game.physics.arcade.collide(self.player_1, zoidberg, null, touchZoidberg, this);
     });
 
     var timeRemaining = ((60000 - this.timer*15)/1000);
@@ -190,6 +215,10 @@
     this.background.autoScroll(SCROLL_SPEED, 0);
     console.log(SCROLL_SPEED);
     return vodka.kill();
+  }
+
+  function touchZoidberg () {
+    // this.player_1.body.bounce.setTo(0.5, 0.5);
   }
 
     // Input actions
