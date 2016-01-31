@@ -99,7 +99,17 @@
     objectPhysics(this.coffee, SCROLL_SPEED);
     objectPhysics(this.vodka, SCROLL_SPEED);
 
+    [this.player_1].forEach(function(player){
+      // touching land or falling
+      if(player.body.y > Shots.Game.FLOOR_Y){
+        player.body.y = Shots.Game.FLOOR_Y;
+        player.body.velocity.y = 0;
+        player.body.acceleration.y = 0;
+      }else{
+        player.body.acceleration.y = GRAVITY;
+      }
 
+    });
 
     // // gives gravity to coffee
     // [this.coffee].forEach(function(coffee){
