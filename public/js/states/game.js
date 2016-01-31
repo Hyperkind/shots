@@ -1,6 +1,5 @@
 (function () {
 
-  var GRAVITY = 1945;
 
   var INITIAL_POSITIONS = [
     // Player 1
@@ -12,22 +11,19 @@
     {x: 600, y: 150}
   ];
 
-  var MESSAGE_STYLE = {
-    font: "65px Arial",
-    fill: "#ff0044",
-    align: "center"
-  };
-
   var MATCH = {
     PRE : "PRE",
     IN_PROGRESS : "IN_PROGRESS",
     RESOLVED : "RESOLVED"
   };
 
-  var DEFAULT_FLASH_TIME = 3000; // ms
-
+  // Magic Numbers
   var SCROLL_SPEED = -40;
+  var GRAVITY = 1945;
 
+  // Scoreboard
+  var score = 0;
+  var scoreText;
 
   Shots.Game = function () {
 
@@ -52,6 +48,9 @@
     this.background = this.game.add.tileSprite(0,0,Shots.ASSETS.IMAGE.BG_MORNING.width,Shots.ASSETS.IMAGE.BG_MORNING.height, Shots.ASSETS.IMAGE.BG_MORNING.name);
     this.background.autoScroll(SCROLL_SPEED, 0);
 
+    // create scoreboard
+    scoreText = this.game.add.text(16, 16, 'Coffees Collected: 0', {fontSize: '32px', fill: 'red'});
+
     this.player_1 = new Shots.Player(this.game, 0, 'teo', fx);
     this.game.add.existing(this.player_1);
 
@@ -62,6 +61,9 @@
     // loads vodka
     this.vodka = new Shots.Vodka(this.game, 0);
     this.game.add.existing(this.vodka);
+
+    // load coffee at quasi-regular intervals
+
 
     //position players & items
     this.player_1.x = INITIAL_POSITIONS[0].x;
@@ -134,27 +136,12 @@
   function collectCoffee () {
     this.player_1.coffeeCounter++;
     console.log(this.player_1.coffeeCounter);
-    this.coffee_notice();
+    score += 1;
+    scoreText.text = 'Coffees Collected: ' + score;
     SCROLL_SPEED -= 40;
     this.background.autoScroll(SCROLL_SPEED, 0);
     return this.coffee.kill();
   }
-
-  Shots.Game.prototype.flash = function(message, cb){
-
-    var text = this.game.add.text(0, 0, message, MESSAGE_STYLE);
-    text.x = this.game.world.centerX - text.width/2;
-
-    // setTimeout(function(){
-    //   text.destroy();
-    //   if(cb) cb();
-    // }, DEFAULT_FLASH_TIME);
-  };
-
-  Shots.Game.prototype.coffee_notice = function(){
-    this.flash('Coffee Collect: ' + this.player_1.coffeeCounter);
-
-  };
 
     // Input actions
   Shots.Game.prototype.continue = function () {
