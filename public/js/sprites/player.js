@@ -16,6 +16,7 @@
 
   var WALK_SPEED = 401;
   var JUMP_HEIGHT = 1230;
+  var JUMP_COUNT = 0;
 
   // var FACING_FACTOR = {
   //   LEFT : -1,
@@ -66,19 +67,25 @@
   // is invoked on every frame
   Shots.Player.prototype.update = function(){
 
+  // resets JUMP_COUNT to 0 upon landing
+  if (this.body.y === 480) {
+    JUMP_COUNT = 0;
+
+  }
 
   };
 
   // Input actions
   Shots.Player.prototype.jump = function () {
     // if(!this.alive) return;
-    // allow jumping from the floor (not in mid air)
-    if( this.body.y === Shots.Game.FLOOR_Y ){
+    // allows double jump
+    if( JUMP_COUNT <= 1) {
+      JUMP_COUNT++;
       this.body.velocity.y = -JUMP_HEIGHT;
+
     }
 
     this.fx.play();
-
 
   };
 
