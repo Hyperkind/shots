@@ -2,13 +2,13 @@
 
  var BIND = {
     PLAYER : {
-        JUMP : Phaser.KeyCode.W,
-        LEFT : Phaser.KeyCode.A,
-        RIGHT : Phaser.KeyCode.D
+        JUMP : Phaser.KeyCode.SPACEBAR,
+        LEFT : Phaser.KeyCode.LEFT,
+        RIGHT : Phaser.KeyCode.RIGHT
       },
 
     STATE : {
-      CONTINUE : Phaser.KeyCode.ENTER,
+      CONTINUE : Phaser.KeyCode.N,
     }
   };
 
