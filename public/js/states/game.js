@@ -31,8 +31,8 @@
 
     this.player_1;
     this.coffee = [];
+    this.vodka = [];
     this.timer = 0;
-    this.vodka;
     this.input; // direction that player faces
     this.match_state; // ???
 
@@ -67,8 +67,8 @@
     // this.game.add.existing(this.coffee);
 
     // loads vodka
-    this.vodka = new Shots.Vodka(this.game, 0);
-    this.game.add.existing(this.vodka);
+    this.vodka.push(new Shots.Vodka(this.game, 0));
+    this.game.add.existing(this.vodka[0]);
 
     //position players & items
     this.player_1.x = INITIAL_POSITIONS[0].x;
@@ -78,8 +78,8 @@
     this.coffee[0].y = INITIAL_POSITIONS[1].y;
 
 
-    this.vodka.x = INITIAL_POSITIONS[2].x;
-    this.vodka.y = INITIAL_POSITIONS[2].y;
+    this.vodka[0].x = INITIAL_POSITIONS[2].x;
+    this.vodka[0].y = INITIAL_POSITIONS[2].y;
 
     // initialize input handler
     this.input = new Shots.GameInput(this);
@@ -102,6 +102,16 @@
       this.coffee.push(newCoffee);
     }
 
+    if(this.timer % Math.floor(Math.random() * 5000 + 5) === 0){
+      var newVodka = new Shots.Vodka(this.game, 0);
+      //randomize where it falls, maybe to right of player.x
+      newVodka.x = INITIAL_POSITIONS[2].x;
+      // INITIAL_POSITIONS[1].x += 0;
+      //make sure adding and pushing after setting newVodka
+      this.game.add.existing(newVodka);
+      this.vodka.push(newVodka);
+    }
+
     // Refactor player/item physics
     function objectPhysics (obj, scrollSpeed) {
       if (obj.body.y > Shots.Game.FLOOR_Y){
@@ -118,8 +128,9 @@
       objectPhysics(coffee, SCROLL_SPEED);
     });
 
-    objectPhysics(this.vodka, SCROLL_SPEED);
-
+    this.vodka.forEach(function(vodka) {
+      objectPhysics(vodka, SCROLL_SPEED);
+    });
 
 
     // gives gravity to coffee
@@ -140,7 +151,9 @@
       self.game.physics.arcade.overlap(self.player_1, coffee, null, collectCoffee.bind(self, coffee), self);
     });
 
-    this.game.physics.arcade.overlap(this.player_1, this.vodka, null, collectVodka, this);
+    this.vodka.forEach(function(vodka) {
+      self.game.physics.arcade.overlap(self.player_1, vodka, null, collectVodka.bind(self, vodka), this);
+    });
 
     var timeRemaining = ((60000 - this.timer*15)/1000);
 
@@ -159,21 +172,24 @@
     this.player_1.coffeeCounter++;
     SCROLL_SPEED -= 40;
     this.background.autoScroll(SCROLL_SPEED, 0);
+    console.log(SCROLL_SPEED);
     return coffee.kill();
   }
 
-  function collectVodka () {
+  function collectVodka (vodka) {
     if (this.player_1.coffeeCounter > 11) {
       this.player_1.coffeeCounter -= 10;
     } else {
       this.player_1.coffeeCounter = 0;
     }
-    if (SCROLL_SPEED < -241) {
+    if (SCROLL_SPEED < -240) {
       SCROLL_SPEED += 200;
     } else {
       SCROLL_SPEED = -40;
     }
-    return this.vodka.kill();
+    this.background.autoScroll(SCROLL_SPEED, 0);
+    console.log(SCROLL_SPEED);
+    return vodka.kill();
   }
 
     // Input actions
