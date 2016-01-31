@@ -25,6 +25,9 @@
   var score = 0;
   var scoreText;
 
+  var distance = 0;
+  var distanceText;
+
   Shots.Game = function () {
 
     this.player_1;
@@ -50,7 +53,10 @@
     this.background.autoScroll(SCROLL_SPEED, 0);
 
     // create scoreboard
-    scoreText = this.game.add.text(16, 16, 'Coffees Collected: 0', {fontSize: '32px', fill: 'red'});
+    scoreText = this.game.add.text(16, 16, 'Time Remaining: 60', {fontSize: '32px', fill: 'red'});
+
+    // create distanceboard
+    distanceText = this.game.add.text(400, 16, 'Distance Traveled: 0', {fontSize: '32px', fill: 'red'});
 
     this.player_1 = new Shots.Player(this.game, 0, 'teo', fx);
     this.game.add.existing(this.player_1);
@@ -65,17 +71,13 @@
     this.vodka = new Shots.Vodka(this.game, 0);
     this.game.add.existing(this.vodka);
 
-    // load coffee at quasi-regular intervals
-
-
     //position players & items
     this.player_1.x = INITIAL_POSITIONS[0].x;
     this.player_1.y = INITIAL_POSITIONS[0].y;
 
     this.coffee[0].x = INITIAL_POSITIONS[1].x;
     this.coffee[0].y = INITIAL_POSITIONS[1].y;
-    // this.coffee.x = INITIAL_POSITIONS[1].x;
-    // this.coffee.y = INITIAL_POSITIONS[1].y;
+
 
     this.vodka.x = INITIAL_POSITIONS[2].x;
     this.vodka.y = INITIAL_POSITIONS[2].y;
@@ -88,12 +90,11 @@
   Shots.Game.FLOOR_Y = 480;
 
   Shots.Game.prototype.update = function () {
-    console.log(this.timer);
     this.timer++;
 
+    // New coffee creator
     if(this.timer % Math.floor(Math.random() * 300 + 5) === 0){
       var newCoffee = new Shots.Coffee(this.game, 0);
-      console.log(newCoffee);
       //randomize where it falls, maybe to right of player.x
       newCoffee.x = INITIAL_POSITIONS[1].x;
       // INITIAL_POSITIONS[1].x += 0;
@@ -111,12 +112,14 @@
       }else{
         obj.body.acceleration.y = GRAVITY;
         obj.body.velocity.x = scrollSpeed;
+        obj.body.bounce.set(3);
       }
     }
 
     this.coffee.forEach(function(coffee){
-    objectPhysics(coffee, SCROLL_SPEED);
+      objectPhysics(coffee, SCROLL_SPEED);
     });
+
     objectPhysics(this.vodka, SCROLL_SPEED);
 
 
@@ -134,34 +137,30 @@
 
     });
 
-    // // gives vodka to vodka
-    // [this.vodka].forEach(function(vodka){
-    //   // drops vodka to ground
-    //   if(vodka.body.y > Shots.Game.FLOOR_Y){
-    //     vodka.body.y = Shots.Game.FLOOR_Y;
-    //     vodka.body.velocity.y = 0;
-    //     vodka.body.acceleration.y = 0;
-    //   }else{
-    //   vodka.body.acceleration.y = GRAVITY;
-    //   vodka.body.velocity.x = -40;
-    //   }
-
-    // });
-
     var self = this;
     this.coffee.forEach(function(coffee){
       self.game.physics.arcade.overlap(self.player_1, coffee, null, collectCoffee.bind(self, coffee), self);
     });
+
     this.game.physics.arcade.collide(this.player_1, this.vodka);
 
+    var timeRemaining = ((60000 - this.timer*15)/1000);
+
+    scoreText.text = 'Time Remaining: ' + timeRemaining; //+ score;
+
+
+    distanceText.text = 'Distance Traveled: ' + Math.floor(((SCROLL_SPEED*-0.1) * this.timer)/10000);
+
+    if (timeRemaining === 0) {
+      // match end
+    }
   };
 
 
   function collectCoffee (coffee) {
     this.player_1.coffeeCounter++;
     console.log(this.player_1.coffeeCounter);
-    score += 1;
-    scoreText.text = 'Coffees Collected: ' + score;
+    // score += 1;
     SCROLL_SPEED -= 40;
     this.background.autoScroll(SCROLL_SPEED, 0);
 
