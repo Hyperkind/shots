@@ -333,8 +333,8 @@
   Shots.Game.prototype.continue = function () {
 
     if(this.match_state === MATCH.RESOLVED){
-      console.log('if!');
-      this.state.start();
+      // Shots.game.state.start(Shots.STATES.BOOT);
+      window.location.reload();
     }
   };
 
