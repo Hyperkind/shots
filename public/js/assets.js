@@ -27,7 +27,7 @@ Shots.ASSETS = {
   IMAGE : {
     BG_MORNING : {
       name : 'bg',
-      path : 'assets/graphics/shots-morning-background.png',
+      path : 'assets/graphics/shots-background.png',
       width : 900,
       height : 600
     }
