@@ -84,48 +84,50 @@
 
   Shots.Game.prototype.update = function () {
 
-    // determine which direction each player is facing
-
-
-    [this.player_1].forEach(function(player){
-      // touching land or falling
-      if(player.body.y > Shots.Game.FLOOR_Y){
-        player.body.y = Shots.Game.FLOOR_Y;
-        player.body.velocity.y = 0;
-        player.body.acceleration.y = 0;
+    // Refactor player/item physics
+    function objectPhysics (obj, scrollSpeed) {
+      if (obj.body.y > Shots.Game.FLOOR_Y){
+        obj.body.y = Shots.Game.FLOOR_Y;
+        obj.body.velocity.y = 0;
+        obj.body.acceleration.y = 0;
       }else{
-        player.body.acceleration.y = GRAVITY;
+        obj.body.acceleration.y = GRAVITY;
+        obj.body.velocity.x = scrollSpeed;
       }
+    }
 
-    });
+    objectPhysics(this.coffee, SCROLL_SPEED);
+    objectPhysics(this.vodka, SCROLL_SPEED);
 
-    // gives gravity to coffee
-    [this.coffee].forEach(function(coffee){
-      // drops coffee to ground
-      if(coffee.body.y > Shots.Game.FLOOR_Y){
-        coffee.body.y = Shots.Game.FLOOR_Y;
-        coffee.body.velocity.y = 0;
-        coffee.body.acceleration.y = 0;
-      }else{
-      coffee.body.acceleration.y = GRAVITY;
-      coffee.body.velocity.x = SCROLL_SPEED;
-      }
 
-    });
 
-    // gives vodka to vodka
-    [this.vodka].forEach(function(vodka){
-      // drops vodka to ground
-      if(vodka.body.y > Shots.Game.FLOOR_Y){
-        vodka.body.y = Shots.Game.FLOOR_Y;
-        vodka.body.velocity.y = 0;
-        vodka.body.acceleration.y = 0;
-      }else{
-      vodka.body.acceleration.y = GRAVITY;
-      vodka.body.velocity.x = -40;
-      }
+    // // gives gravity to coffee
+    // [this.coffee].forEach(function(coffee){
+    //   // drops coffee to ground
+    //   if(coffee.body.y > Shots.Game.FLOOR_Y){
+    //     coffee.body.y = Shots.Game.FLOOR_Y;
+    //     coffee.body.velocity.y = 0;
+    //     coffee.body.acceleration.y = 0;
+    //   }else{
+    //   coffee.body.acceleration.y = GRAVITY;
+    //   coffee.body.velocity.x = SCROLL_SPEED;
+    //   }
 
-    });
+    // });
+
+    // // gives vodka to vodka
+    // [this.vodka].forEach(function(vodka){
+    //   // drops vodka to ground
+    //   if(vodka.body.y > Shots.Game.FLOOR_Y){
+    //     vodka.body.y = Shots.Game.FLOOR_Y;
+    //     vodka.body.velocity.y = 0;
+    //     vodka.body.acceleration.y = 0;
+    //   }else{
+    //   vodka.body.acceleration.y = GRAVITY;
+    //   vodka.body.velocity.x = -40;
+    //   }
+
+    // });
 
     this.game.physics.arcade.overlap(this.player_1, this.coffee, null, collectCoffee, this);
     this.game.physics.arcade.collide(this.player_1, this.vodka);
