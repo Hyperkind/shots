@@ -3,9 +3,11 @@ Shots.ASSETS = {
   SPRITESHEET : {
     PLAYER : {
       name : 'player',
-      path : 'assets/graphics/placeholder_steve.png',
-      width : 100,
+      path : 'assets/graphics/shots-stevesprite.png',
+      width : 57,
       height : 100,
+      frames : 5,
+      frames_per_row : 5
     },
     COFFEE : {
       name : 'coffee',
