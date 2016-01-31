@@ -6,6 +6,8 @@ Shots.Boot.prototype.preload = function () {
   // will preload all assets
   // using functional and declarative programming, not imperatives!
   // `boot.js` will run functions for every asset declared in `assets.js`
+  Shots.game.load.audio('normal-walk', 'assets/audio/normal-walk.mp3');
+  Shots.game.load.audio('jump', 'assets/audio/jump.mp3');
 
   // autoLoad each asset by type
   Object.keys(Shots.ASSETS).forEach(function(type) {

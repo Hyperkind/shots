@@ -36,6 +36,12 @@
   };
 
   Shots.Game.prototype.create = function () {
+    var music = this.game.add.audio(Shots.ASSETS.AUDIO.NORMAL_WALK.name);
+    music.play();
+    music.loopFull(0.6);
+
+    var fx = this.game.add.audio(Shots.ASSETS.AUDIO.JUMP.name);
+    fx.allowMultiple = true;
 
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.match_state = MATCH.IN_PROGRESS;
@@ -45,7 +51,7 @@
     // create scoreboard
     scoreText = this.game.add.text(16, 16, 'Coffees Collected: 0', {fontSize: '32px', fill: 'red'});
 
-    this.player_1 = new Shots.Player(this.game, 0);
+    this.player_1 = new Shots.Player(this.game, 0, 'teo', fx);
     this.game.add.existing(this.player_1);
 
     // loads coffee
