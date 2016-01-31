@@ -16,9 +16,9 @@ Shots.ASSETS = {
       height : 50
     },
 
-    VODKA : {
-      name : 'vodka',
-      path : 'assets/graphics/pixel_vodka.png',
+    WHISKEY : {
+      name : 'whiskey',
+      path : 'assets/graphics/whiskey.png',
       width : 100,
       height : 100
     },
