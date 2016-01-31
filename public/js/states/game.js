@@ -7,7 +7,7 @@
     {x: 100, y: 450},
     // coffee initial position
     {x: 800, y: 150},
-    // vodka initial position
+    // whiskey initial position
     {x: 850, y: 150},
     // ninja initial position
     {x: 850, y: 225},
@@ -37,7 +37,7 @@
 
     this.player_1;
     this.coffee = [];
-    this.vodka = [];
+    this.whiskey = [];
     this.ninja = [];
     this.zoidberg = [];
     this.car = [];
@@ -74,8 +74,8 @@
     this.game.add.existing(this.coffee[0]);
 
     // loads vodka
-    this.vodka.push(new Shots.Vodka(this.game, 0));
-    this.game.add.existing(this.vodka[0]);
+    this.whiskey.push(new Shots.Whiskey(this.game, 0));
+    this.game.add.existing(this.whiskey[0]);
 
     // loads ninja
     this.ninja.push(new Shots.Ninja(this.game, 0));
@@ -96,8 +96,8 @@
     this.coffee[0].x = INITIAL_POSITIONS[1].x;
     this.coffee[0].y = INITIAL_POSITIONS[1].y;
 
-    this.vodka[0].x = INITIAL_POSITIONS[2].x;
-    this.vodka[0].y = INITIAL_POSITIONS[2].y;
+    this.whiskey[0].x = INITIAL_POSITIONS[2].x;
+    this.whiskey[0].y = INITIAL_POSITIONS[2].y;
 
     this.ninja[0].x = INITIAL_POSITIONS[3].x;
     this.ninja[0].y = INITIAL_POSITIONS[3].y;
@@ -129,15 +129,15 @@
       this.coffee.push(newCoffee);
     }
 
-    // new vodka creator
+    // new whiskey creator
     if(this.timer % Math.floor(Math.random() * 5000 + 5) === 0) {
-      var newVodka = new Shots.Vodka(this.game, 0);
+      var newWhiskey = new Shots.Whiskey(this.game, 0);
       //randomize where it falls, maybe to right of player.x
-      newVodka.x = INITIAL_POSITIONS[2].x;
+      newWhiskey.x = INITIAL_POSITIONS[2].x;
       // INITIAL_POSITIONS[1].x += 0;
-      //make sure adding and pushing after setting newVodka
-      this.game.add.existing(newVodka);
-      this.vodka.push(newVodka);
+      //make sure adding and pushing after setting newWhiskey
+      this.game.add.existing(newWhiskey);
+      this.whiskey.push(newWhiskey);
     }
 
     // new ninja creator
@@ -186,9 +186,9 @@
       objectPhysics(coffee, SCROLL_SPEED, GRAVITY);
     });
 
-    // vodka
-    this.vodka.forEach(function(vodka) {
-      objectPhysics(vodka, SCROLL_SPEED, GRAVITY);
+    // whiskey
+    this.whiskey.forEach(function(whiskey) {
+      objectPhysics(whiskey, SCROLL_SPEED, GRAVITY);
     });
 
     // zoidberg
@@ -224,8 +224,8 @@
       self.game.physics.arcade.overlap(self.player_1, coffee, null, collectCoffee.bind(self, coffee), self);
     });
 
-    this.vodka.forEach(function(vodka) {
-      self.game.physics.arcade.overlap(self.player_1, vodka, null, collectVodka.bind(self, vodka), this);
+    this.whiskey.forEach(function(whiskey) {
+      self.game.physics.arcade.overlap(self.player_1, whiskey, null, collectWhiskey.bind(self, whiskey), this);
     });
 
     // ninja collision detection
@@ -262,7 +262,7 @@
     return coffee.kill();
   }
 
-  function collectVodka (vodka) {
+  function collectWhiskey (whiskey) {
     if (this.player_1.coffeeCounter > 11) {
       this.player_1.coffeeCounter -= 10;
     } else {
@@ -275,7 +275,7 @@
     }
     this.background.autoScroll(SCROLL_SPEED, 0);
     console.log(SCROLL_SPEED);
-    return vodka.kill();
+    return whiskey.kill();
   }
 
   function touchMyNinja (ninja) {
