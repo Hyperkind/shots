@@ -66,25 +66,6 @@
   // is invoked on every frame
   Shots.Player.prototype.update = function(){
 
-    // update facing
-    // if( this.alive ){
-    //   this.scale.x = FACING_FACTOR[ this.facing ];
-    // }
-
-    // update animations
-    // if(!this.alive){
-    //   this.animations.play(ANIMATIONS.DEAD.name);
-    // }else if(this.is_diving){
-    //   this.animations.play(ANIMATIONS.DIVE.name);
-    // }else{
-    //   if(this.body.y < Shots.Game.FLOOR_Y){ // in the air
-    //     this.animations.play(ANIMATIONS.JUMP.name);
-    //   } else if(this.body.velocity.x !== 0){ // running
-    //     this.animations.play(ANIMATIONS.WALK.name, ANIMATIONS.WALK.fps, true);
-    //   } else {
-    //     this.animations.play(ANIMATIONS.IDLE.name, ANIMATIONS.IDLE.fps, true);
-    //   }
-    // }
 
   };
 
@@ -97,9 +78,7 @@
     }
 
     this.fx.play();
-    // else if( this.is_diving ){ // allow jump after dive (in mid air)
-    //   this.body.velocity.y = -JUMP_HEIGHT*(this.body.y/Shots.Game.FLOOR_Y);
-    // }
+
 
   };
 
@@ -110,13 +89,15 @@
 
   Shots.Player.prototype.step_right = function () {
     if(!this.alive) return;
-    this.body.velocity.x = WALK_SPEED;
+    if (this.body.y === Shots.Game.FLOOR_Y) {
+      this.body.velocity.x = WALK_SPEED;
+    } else {
+      this.body.velocity.x = WALK_SPEED*2.5;
+    }
   };
 
   Shots.Player.prototype.stop = function () {
     this.body.velocity.x = 0;
   };
-
-
 
 })();

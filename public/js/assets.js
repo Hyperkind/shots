@@ -37,18 +37,18 @@ Shots.ASSETS = {
       height : 100
     },
 
-    ZOIDBURG : {
-      name : 'zoidburg',
-      path : 'assets/graphics/zoidburg.png',
-      width : 100,
-      height : 100
+    ZOIDBERG : {
+      name : 'zoidberg',
+      path : 'assets/graphics/zoidberg_258x435.png',
+      width : 258,
+      height : 435
     }
   },
 
   IMAGE : {
     BG_MORNING : {
       name : 'bg',
-      path : 'assets/graphics/shots-morning-background.png',
+      path : 'assets/graphics/shots-background.png',
       width : 900,
       height : 600
     }
