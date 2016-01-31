@@ -1,5 +1,19 @@
 (function () {
 
+  // setting up animations
+  var ANIMATIONS = {
+    WALK : {
+      name : 'walk',
+      frames : [1, 2, 3, 4],
+      fps : 10
+    },
+    JUMP : {
+      name : 'jump',
+      frames : [0],
+      fps : 1
+    }
+  };
+
   var WALK_SPEED = 401;
   var JUMP_HEIGHT = 1230;
 
@@ -7,6 +21,12 @@
   //   LEFT : -1,
   //   RIGHT : 1
   // };
+
+  function select_sprite_row (player_id) {
+    return function (frame_id) {
+      return frame_id + player_id * Shots.ASSETS.SPRITESHEET.PLAYER.frames_per_row;
+    };
+  }
 
   Shots.Player = function (game, id, name, fx) {
     this.game = game;
@@ -23,6 +43,11 @@
 
     // use stage bounding box
     this.body.collideWorldBounds = true;
+
+    this.animations.add(ANIMATIONS.WALK.name, ANIMATIONS.WALK.frames.map(select_sprite_row(this.id)));
+    this.animations.add(ANIMATIONS.JUMP.name, ANIMATIONS.JUMP.frames.map(select_sprite_row(this.id)));
+
+    this.animations.play(ANIMATIONS.WALK.name, ANIMATIONS.WALK.fps, true);
 
   };
 
