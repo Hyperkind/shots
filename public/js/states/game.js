@@ -56,6 +56,9 @@
     this.vodka = new Shots.Vodka(this.game, 0);
     this.game.add.existing(this.vodka);
 
+    // load coffee at quasi-regular intervals
+
+
     //position players & items
     this.player_1.x = INITIAL_POSITIONS[0].x;
     this.player_1.y = INITIAL_POSITIONS[0].y;
