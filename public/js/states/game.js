@@ -101,19 +101,18 @@
 
 
 
-    // // gives gravity to coffee
-    // [this.coffee].forEach(function(coffee){
-    //   // drops coffee to ground
-    //   if(coffee.body.y > Shots.Game.FLOOR_Y){
-    //     coffee.body.y = Shots.Game.FLOOR_Y;
-    //     coffee.body.velocity.y = 0;
-    //     coffee.body.acceleration.y = 0;
-    //   }else{
-    //   coffee.body.acceleration.y = GRAVITY;
-    //   coffee.body.velocity.x = SCROLL_SPEED;
-    //   }
+    // gives gravity to coffee
+    [this.player_1].forEach(function(player){
+      // drops player to ground
+      if(player.body.y > Shots.Game.FLOOR_Y){
+        player.body.y = Shots.Game.FLOOR_Y;
+        player.body.velocity.y = 0;
+        player.body.acceleration.y = 0;
+      }else{
+      player.body.acceleration.y = GRAVITY;
+      }
 
-    // });
+    });
 
     // // gives vodka to vodka
     // [this.vodka].forEach(function(vodka){
