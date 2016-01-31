@@ -8,7 +8,7 @@
     // coffee initial position
     {x: 800, y: 150},
     // vodka initial position
-    {x: 600, y: 150}
+    {x: 850, y: 150}
   ];
 
   var MATCH = {
@@ -22,7 +22,6 @@
   var GRAVITY = 1945;
 
   // Scoreboard
-  var score = 0;
   var scoreText;
 
   var distance = 0;
@@ -112,7 +111,6 @@
       }else{
         obj.body.acceleration.y = GRAVITY;
         obj.body.velocity.x = scrollSpeed;
-        obj.body.bounce.set(3);
       }
     }
 
@@ -142,7 +140,7 @@
       self.game.physics.arcade.overlap(self.player_1, coffee, null, collectCoffee.bind(self, coffee), self);
     });
 
-    this.game.physics.arcade.collide(this.player_1, this.vodka);
+    this.game.physics.arcade.overlap(this.player_1, this.vodka, null, collectVodka, this);
 
     var timeRemaining = ((60000 - this.timer*15)/1000);
 
@@ -159,23 +157,24 @@
 
   function collectCoffee (coffee) {
     this.player_1.coffeeCounter++;
-    console.log(this.player_1.coffeeCounter);
-    // score += 1;
     SCROLL_SPEED -= 40;
     this.background.autoScroll(SCROLL_SPEED, 0);
-
-    // this.game.time.events.repeat(Phaser.Timer.SECOND, 20, resCoffee, this);
-
     return coffee.kill();
   }
 
-  // function resCoffee () {
-  //   var item = this.Coffee.getFirstDead();
-
-  //   if (item) {
-  //     item.reset(this.game.world.randomX, this.game.world.randomY);
-  //   }
-  // }
+  function collectVodka () {
+    if (this.player_1.coffeeCounter > 11) {
+      this.player_1.coffeeCounter -= 10;
+    } else {
+      this.player_1.coffeeCounter = 0;
+    }
+    if (SCROLL_SPEED < -241) {
+      SCROLL_SPEED += 200;
+    } else {
+      SCROLL_SPEED = -40;
+    }
+    return this.vodka.kill();
+  }
 
     // Input actions
   Shots.Game.prototype.continue = function () {
