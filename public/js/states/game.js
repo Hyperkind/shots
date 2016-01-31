@@ -8,7 +8,9 @@
     // coffee initial position
     {x: 800, y: 150},
     // vodka initial position
-    {x: 850, y: 150}
+    {x: 850, y: 150},
+    // ninja initial position
+    {x: 850, y: 225}
   ];
 
   var MATCH = {
@@ -32,9 +34,10 @@
     this.player_1;
     this.coffee = [];
     this.vodka = [];
+    this.ninja = [];
     this.timer = 0;
     this.input; // direction that player faces
-    this.match_state; // ???
+    this.match_state;
 
   };
 
@@ -70,6 +73,10 @@
     this.vodka.push(new Shots.Vodka(this.game, 0));
     this.game.add.existing(this.vodka[0]);
 
+    // loads ninja
+    this.ninja.push(new Shots.Ninja(this.game, 0));
+    this.game.add.existing(this.ninja[0]);
+
     //position players & items
     this.player_1.x = INITIAL_POSITIONS[0].x;
     this.player_1.y = INITIAL_POSITIONS[0].y;
@@ -80,6 +87,9 @@
 
     this.vodka[0].x = INITIAL_POSITIONS[2].x;
     this.vodka[0].y = INITIAL_POSITIONS[2].y;
+
+    this.ninja[0].x = INITIAL_POSITIONS[3].x;
+    this.ninja[0].y = INITIAL_POSITIONS[3].y;
 
     // initialize input handler
     this.input = new Shots.GameInput(this);
@@ -102,6 +112,7 @@
       this.coffee.push(newCoffee);
     }
 
+    // new vodka creator
     if(this.timer % Math.floor(Math.random() * 5000 + 5) === 0){
       var newVodka = new Shots.Vodka(this.game, 0);
       //randomize where it falls, maybe to right of player.x
@@ -112,26 +123,43 @@
       this.vodka.push(newVodka);
     }
 
+    // new ninja creator
+    if(this.timer % Math.floor(Math.random() * 300 + 5) === 0){
+      var newNinja = new Shots.Ninja(this.game, 0);
+      //randomize where ninja starts, i.e. higher or lower
+      newNinja.y = INITIAL_POSITIONS[3].y;
+      newNinja.x = INITIAL_POSITIONS[3].x;
+      //make sure adding and pushing after setting newNinja
+      this.game.add.existing(newNinja);
+      this.ninja.push(newNinja);
+    }
+
     // Refactor player/item physics
-    function objectPhysics (obj, scrollSpeed) {
+    function objectPhysics (obj, scrollSpeed, gravity) {
       if (obj.body.y > Shots.Game.FLOOR_Y){
         obj.body.y = Shots.Game.FLOOR_Y;
         obj.body.velocity.y = 0;
         obj.body.acceleration.y = 0;
       }else{
-        obj.body.acceleration.y = GRAVITY;
+        obj.body.acceleration.y = gravity;
         obj.body.velocity.x = scrollSpeed;
       }
     }
 
+    // coffee
     this.coffee.forEach(function(coffee){
-      objectPhysics(coffee, SCROLL_SPEED);
+      objectPhysics(coffee, SCROLL_SPEED, GRAVITY);
     });
 
+    // vodka
     this.vodka.forEach(function(vodka) {
-      objectPhysics(vodka, SCROLL_SPEED);
+      objectPhysics(vodka, SCROLL_SPEED, GRAVITY);
     });
 
+    // ninja
+    this.ninja.forEach(function(ninja) {
+      objectPhysics(ninja, SCROLL_SPEED);
+    });
 
     // gives gravity to coffee
     [this.player_1].forEach(function(player){
@@ -153,6 +181,11 @@
 
     this.vodka.forEach(function(vodka) {
       self.game.physics.arcade.overlap(self.player_1, vodka, null, collectVodka.bind(self, vodka), this);
+    });
+
+    // ninja collision detection
+    this.ninja.forEach(function(ninja) {
+      self.game.physics.arcade.collide(self.player_1, ninja, null, touchMyNinja.bind(self, ninja), this);
     });
 
     var timeRemaining = ((60000 - this.timer*15)/1000);
@@ -190,6 +223,13 @@
     this.background.autoScroll(SCROLL_SPEED, 0);
     console.log(SCROLL_SPEED);
     return vodka.kill();
+  }
+
+  function touchMyNinja (ninja) {
+    SCROLL_SPEED = -40;
+    this.background.autoScroll(SCROLL_SPEED, 0);
+    console.log(SCROLL_SPEED);
+    return ninja.kill();
   }
 
     // Input actions

@@ -21,6 +21,27 @@ Shots.ASSETS = {
       path : 'assets/graphics/pixel_vodka.png',
       width : 100,
       height : 100
+    },
+
+    NINJA : {
+      name : 'ninja',
+      path : 'assets/graphics/cropped-ninja.png',
+      width : 100,
+      height : 100
+    },
+
+    CAR : {
+      name : 'car',
+      path : 'assets/graphics/batmobile.png',
+      width : 100,
+      height : 100
+    },
+
+    ZOIDBURG : {
+      name : 'zoidburg',
+      path : 'assets/graphics/zoidburg.png',
+      width : 100,
+      height : 100
     }
   },
 
