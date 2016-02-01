@@ -54,7 +54,8 @@
     this.match_state;
 
   };
-
+  var zoidbergSound;
+  var ninjaHitSound;
   Shots.Game.prototype.create = function () {
     var music = this.game.add.audio(Shots.ASSETS.AUDIO.NORMAL_WALK.name);
     music.play();
@@ -62,6 +63,12 @@
 
     var fx = this.game.add.audio(Shots.ASSETS.AUDIO.JUMP.name);
     fx.allowMultiple = true;
+
+    zoidbergSound = this.game.add.audio(Shots.ASSETS.AUDIO.ZOIDBERG.name);
+    zoidbergSound.allowMultiple = true;
+
+    ninjaHitSound = this.game.add.audio(Shots.ASSETS.AUDIO.NINJA_HIT.name);
+    ninjaHitSound.allowMultiple = true;
 
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.match_state = MATCH.IN_PROGRESS;
@@ -311,11 +318,13 @@
     SCROLL_SPEED = -40;
     this.background.autoScroll(SCROLL_SPEED, 0);
     console.log(SCROLL_SPEED);
+    ninjaHitSound.play();
     return ninja.kill();
   }
 
   function touchZoidberg () {
     // this.player_1.body.bounce.setTo(0.5, 0.5);
+    zoidbergSound.play();
   }
 
   function touchCar (car) {

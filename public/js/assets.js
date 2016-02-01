@@ -61,6 +61,14 @@ Shots.ASSETS = {
     JUMP : {
       name : 'jump',
       path : 'assets/audio/jump.mp3'
+    },
+    ZOIDBERG : {
+      name : 'zoidberg',
+      path : 'assets/audio/zoidberg.mp3'
+    },
+    NINJA_HIT : {
+      name : 'ninja-hit1',
+      path : 'assets/audio/ninja-hit1.mp3'
     }
   }
 };

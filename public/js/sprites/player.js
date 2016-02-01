@@ -29,12 +29,14 @@
     };
   }
 
-  Shots.Player = function (game, id, name, fx) {
+  Shots.Player = function (game, id, name, fx, zoidbergSound, ninjaHitSound) {
     this.game = game;
     this.id = id;
     this.name = name? name : 'Player ' +(id+1);
     this.coffeeCounter = 0;
     this.fx = fx;
+    this.zoidbergSound = zoidbergSound;
+    this.ninjaHitSound = ninjaHitSound;
     // this.facing;
 
     Phaser.Sprite.call(this, game, 0, 0, Shots.ASSETS.SPRITESHEET.PLAYER.name);
