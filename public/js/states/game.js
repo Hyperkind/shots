@@ -12,9 +12,9 @@
     // ninja initial position
     {x: 850, y: 225},
     // zoidberg initial position
-    {x: 850, y: 400},
+    {x: 850, y: 600},
     // car initial position
-    {x: 850, y: 450}
+    {x: 850, y: 600}
   ];
 
   var MATCH = {
@@ -234,19 +234,19 @@
     });
 
     this.zoidberg.forEach(function(zoidberg) {
-      self.game.physics.arcade.collide(self.player_1, zoidberg, null, touchZoidberg, this);
+      self.game.physics.arcade.collide(self.player_1, zoidberg, null, touchZoidberg.bind(self,zoidberg), this);
     });
 
     this.car.forEach(function(car) {
       self.game.physics.arcade.collide(self.player_1, car, null, touchCar.bind(self, car), this);
     });
 
-    var timeRemaining = ((60000 - this.timer*15)/1000);
+    var timeRemaining = Math.floor((60000 - this.timer*15)/1000);
 
     scoreText.text = 'Time Remaining: ' + timeRemaining; //+ score;
 
 
-    distanceText.text = 'Distance Traveled: ' + Math.floor(((SCROLL_SPEED*-0.1) * this.timer)/10000);
+    distanceText.text = 'Score: ' + (((SCROLL_SPEED*-0.8) * this.timer)/10000);
 
     if (timeRemaining === 0) {
       // match end
@@ -278,22 +278,23 @@
     return whiskey.kill();
   }
 
-  function touchMyNinja (ninja) {
-    SCROLL_SPEED = -40;
-    this.background.autoScroll(SCROLL_SPEED, 0);
-    console.log(SCROLL_SPEED);
-    return ninja.kill();
+  function touchMyNinja () {
+    // SCROLL_SPEED = -40;
+    // this.background.autoScroll(SCROLL_SPEED, 0);
+    // console.log(SCROLL_SPEED);
+    // return ninja.kill();
   }
 
   function touchZoidberg () {
-    // this.player_1.body.bounce.setTo(0.5, 0.5);
+    // SCROLL_SPEED = -40;
+    // this.background.autoScroll(SCROLL_SPEED, 0);
+    // console.log(SCROLL_SPEED);
   }
 
-  function touchCar (car) {
-    SCROLL_SPEED = -40;
-    this.background.autoScroll(SCROLL_SPEED, 0);
-    console.log(SCROLL_SPEED);
-    return car.kill();
+  function touchCar () {
+    // SCROLL_SPEED = -40;
+    // this.background.autoScroll(SCROLL_SPEED, 0);
+    // console.log(SCROLL_SPEED);
   }
 
     // Input actions
