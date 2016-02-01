@@ -15,7 +15,7 @@
   };
 
   var WALK_SPEED = 401;
-  var JUMP_HEIGHT = 1230;
+  var JUMP_HEIGHT = 800;
   var JUMP_COUNT = 0;
 
   // var FACING_FACTOR = {

@@ -23,6 +23,14 @@
     RESOLVED : "RESOLVED"
   };
 
+  var FLASH_MESSAGE_STYLE = {
+    font: "65px Arial",
+    fill: "#ff0044",
+    align: "center"
+  };
+
+  var DEFAULT_FLASH_TIME = 3000; // ms
+
   // Magic Numbers
   var SCROLL_SPEED = -40;
   var GRAVITY = 1945;
@@ -30,7 +38,7 @@
   // Scoreboard
   var scoreText;
 
-  var distance = 0;
+  var distance;
   var distanceText;
 
   Shots.Game = function () {
@@ -245,14 +253,35 @@
 
     scoreText.text = 'Time Remaining: ' + timeRemaining; //+ score;
 
+    distance = (((SCROLL_SPEED*-0.8) * this.timer)/10000);
+    distanceText.text = 'Score: ' + distance;
 
-    distanceText.text = 'Score: ' + (((SCROLL_SPEED*-0.8) * this.timer)/10000);
-
-    if (timeRemaining === 0) {
-      // match end
+    if (timeRemaining <= 0) {
+      scoreText.text = ' ';
+      distanceText.text = ' ';
+      SCROLL_SPEED = 0;
+      this.background.autoScroll(SCROLL_SPEED, 0);
+      this.gameOver();
     }
   };
 
+  Shots.Game.prototype.gameOver = function () {
+    this.match_state = MATCH.RESOLVED;
+    console.log(this.match_state);
+    this.game.paused = true;
+    this.flash('Your Score: ' + distance, this.enable_restart_game.bind(this));
+  };
+
+  Shots.Game.prototype.flash = function(message, cb){
+
+    var text = this.game.add.text(0, 0, message, FLASH_MESSAGE_STYLE);
+    text.x = this.game.world.centerX - text.width/2;
+
+    setTimeout(function(){
+      text.destroy();
+      if(cb) cb();
+    }, DEFAULT_FLASH_TIME);
+  };
 
   function collectCoffee (coffee) {
     this.player_1.coffeeCounter++;
@@ -297,10 +326,16 @@
     // console.log(SCROLL_SPEED);
   }
 
+  Shots.Game.prototype.enable_restart_game = function(){
+    this.flash('press [N] to play again');
+  };
+
     // Input actions
   Shots.Game.prototype.continue = function () {
+
     if(this.match_state === MATCH.RESOLVED){
-      this.state.start(Shots.STATES.BOOT);
+      // Shots.game.state.start(Shots.STATES.BOOT);
+      window.location.reload();
     }
   };
 
